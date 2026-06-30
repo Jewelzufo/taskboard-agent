@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
+  "data": {
+    "directory": ".opencode"
+  },
+  "instructions": [
+    "AGENTS.md"
+  ],
+  "share": "manual"
+}
