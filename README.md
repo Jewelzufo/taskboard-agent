@@ -2,6 +2,8 @@
 
 A single-agent SQLite task board with schema-validated payloads, structured crash recovery, and a zero-trust security model. Designed to be read by [Opencode](https://opencode.ai) as its operating manual via `AGENTS.md`.
 
+[AGENTS.md](https://github.com/Jewelzufo/taskboard-agent/blob/main/AGENTS.md)
+
 ---
 
 ## What it is
