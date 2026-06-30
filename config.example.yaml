@@ -1,0 +1,78 @@
+# SQLite Task Board - Example Configuration
+# Copy this file to config.yaml and customize for your environment
+# This file is referenced by agent.py during --check
+
+agent:
+  name: "sqlite-task-board"
+  version: "0.1.0"
+  description: "Local autonomous agent driven by AGENTS.md"
+  dry_run: false  # Set true to simulate without writes (or use AGENT_DRY_RUN env)
+
+database:
+  path: "tasks.db"
+  migrations_dir: "migrations"
+  seeds_dir: "seeds"
+  # Schema is auto-created if missing (see migrations/0001_initial.sql)
+
+workspace:
+  path: "workspace"
+  # Security: all file_write operations are confined here
+  allow_absolute_paths: false
+  reject_traversal: true
+  max_file_size_mb: 10
+  ensure_on_startup: true
+
+security:
+  # Subprocess controls - agent.py enforces shell=False
+  shell:
+    enabled: true
+    mode: "restricted"
+    allowed_commands:
+      - "python"
+      - "python3"
+    timeout_seconds: 30
+  
+  # Network controls (future use - currently local only)
+  network:
+    enabled: false
+    allowlisted_hosts:
+      - "localhost"
+      - "127.0.0.1"
+  
+  # Secrets handling
+  secrets:
+    log_redaction: true
+    never_write_to_disk: true
+
+tasks:
+  defaults:
+    priority: "medium"
+    max_attempts: 3
+    retry_backoff_seconds: 2
+  
+  priorities:
+    critical: 0
+    high: 1
+    medium: 2
+    low: 3
+  
+  # Built-in task types supported by agent.py
+  types:
+    - health_check
+    - ensure_workspace
+    - file_write
+    - shell
+
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  console: true
+  file: ".opencode/agent.log"
+  max_bytes: 1048576
+  backup_count: 3
+
+runtime:
+  # Continuous loop settings
+  poll_interval_seconds: 2
+  idle_sleep_seconds: 2
+  # Validation
+  check_on_startup: true
